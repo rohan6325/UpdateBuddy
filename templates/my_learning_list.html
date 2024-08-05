@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{%block title%}
+My Learning List
+{%endblock title%}
+{% block body %}
+<div class="container mt-5">
+  <h1 class="mb-4">My Learning List</h1>
+
+  {% if learnings %}
+    <ul class="list-group">
+      {% for learning in learnings %}
+        <li class="list-group-item mb-3">
+          <a href="{% url 'learning-detail' learning.learning.pk %}" style="text-decoration: none; color: inherit;">
+          <h2>{{ learning.learning.subject }}</h2>
+          <p>{{ learning.learning.learning_detail }}</p>
+          <p>Status: {{ learning.get_status_display }}</p>
+        </a>
+          <form method="post" action="{% url 'my-learning-list' %}" class="mb-2">
+            {% csrf_token %}
+            <input type="hidden" name="learning_id" value="{{ learning.id }}">
+            <div class="form-group">
+              <label for="status-{{ learning.id }}">Status</label>
+              <select name="status" id="status-{{ learning.id }}" class="form-control">
+                {% for value, display in status_choices %}
+                  <option value="{{ value }}" {% if learning.status == value %}selected{% endif %}>{{ display }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Status</button>
+          </form>
+          <form method="post" action="{% url 'my-learning-list' %}" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="learning_id" value="{{ learning.id }}">
+            <input type="hidden" name="delete_learning" value="true">
+            <button type="submit" class="btn btn-danger">Remove</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="alert alert-info">You have no learnings in your list.</p>
+  {% endif %}
+
+</div>
+{% endblock body %}

@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block body %}
+
+{% for posts in posts %}
+
+
+<div style="display: flex;flex-direction: column; max-width :80% ;">
+<div class="c" style="display:flex; ;align-items:center;justify-content: center; align-items:center; margin: 2.5%;">
+<div class="card" style="width: 50rem; display:flex;">
+  <div class="card-body" style="display:flex">
+    <img class="rounded-circle img-thumbnail" style="height:64px; width:64px"src="{{posts.author.profile.image.url}}">
+    <div style="display: flex; flex-direction: column; margin-left: 2%;">
+    <h5 class="card-title"><a style="text-decoration: none;" href="{%url 'post-detail' posts.id %}">{{posts.title}}</a></h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">By author <a href="{% url 'User-posts' posts.author.username%}">{{posts.author}}</a></h6>
+    <p class="card-text">{{posts.content}}</p>
+    <p class="">{{posts.date|date:"F d,Y"}}</p>
+  </div>
+  </div>
+</div>
+</div>
+</div>
+{% endfor %}
+
+{% endblock body %}

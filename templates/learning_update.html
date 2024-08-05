@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{%block title%}
+Learning Update
+{%endblock title%}
+{% block body %}
+  <h1>Update Learning</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+  </form>
+{% endblock body %}

@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+
+{% block body %}
+<div class="content-section border-1 " style="display: flex; justify-content: center; border: 2px; border-color: black;">
+    <form method="POST" style="border: 1px;border: double; padding: 2px; border-radius: 12px; margin-top: 2%;">
+        {%csrf_token%}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Create new</legend>
+        {{form.as_p}}
+    </fieldset>
+        <button class="btn btn-outline-info" type="submit" style="align-self: center;">Create</button>
+   
+    </form>
+</div>
+{% endblock body %}

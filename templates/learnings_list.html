@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{%block title%}
+Home
+{%endblock title%}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="get" action="">
+                        <div class="form-group">
+                            <label for="sort_by">Sort by:</label>
+                            <select class="form-control" name="sort_by" id="sort_by" onchange="this.form.submit()">
+                                <option value="date" {% if request.GET.sort_by == 'date' %}selected{% endif %}>Date</option>
+                                <option value="youtube" {% if request.GET.sort_by == 'youtube' %}selected{% endif %}>YouTube Links</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Filter by Subject:</label>
+                            <select class="form-control" name="subject" id="subject" onchange="this.form.submit()">
+                                <option value="">All Subjects</option>
+                                {% for subject in subjects %}
+                                    <option value="{{ subject }}" {% if request.GET.subject == subject %}selected{% endif %}>{{ subject }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% for learning in learnings %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="media">
+                            <img class="rounded-circle mr-3" style="height:64px;width:64px" src="{{ learning.author.profile.image.url }}">
+                            <div class="media-body">
+                                <h5 class="mt-0">
+                                    <a href="{% url 'learning-detail' learning.pk %}" style="text-decoration: none; color: inherit;">{{ learning.subject }}</a>
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <a href="{% url 'user-learnings' learning.author %}" style="text-decoration: none; color: inherit;">By {{ learning.author }}</a>
+                                    - {{ learning.date }}
+                                </h6>
+                                <p class="card-text">{{ learning.learning_detail }}</p>
+                                <p class="mb-0"><strong>Hours Learned:</strong> {{ learning.hours_learned }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%} {%endblock%}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .navbar-nav .nav-item .nav-link {
+            color: white;
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            background-color: #111;
+        }
+        .navbar-nav .nav-item .btn-danger {
+            background-color: #d9534f;
+            border: none;
+        }
+        .navbar-nav .nav-item .btn-danger:hover {
+            background-color: #c9302c;
+        }
+        .navbar-nav .nav-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar-nav .nav-item img {
+                width: 60px;
+                height: 60px;
+            }
+            
+        }
+        .cunt{
+          min-height: 100vh;
+        }
+        .navbar-nav{
+            justify-items: center;
+            align-items: center;
+        }
+        .pagination{
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="reset">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'learnings_list' %}">Logo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my-learning-list' %}">My Learning List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'learning-create' %}">Create Learning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user-learnings' user.username %}">Learnings</a>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav" >
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %} " >
+                            <img src="{{ user.profile.image.url}}" alt="Profile">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" class="form-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="cunt">
+        
+    {% block body %}
+    {% endblock body %}
+    <div class="pagination">
+    {% if is_paginated %}
+      
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number }}">Previous</a>
+    
+    {% endif %}
+ 
+
+  {% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+    <a class="btn btn-outline-info mb-4" href="?page={{num }}">{{num}}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <a class="btn btn-outline-info mb-4" href="?page={{num }}">{{num}}</a>     
+{% endif %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+<a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>
+<a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages }}">Last</a>
+{% endif %}
+{% endif %}
+</div>
+  </div>
+    <footer class="footer bg-dark text-white text-center py-3">
+        &copy; 2023 Your Website. All rights reserved. <a href="#" class="text-danger">Privacy Policy</a> | <a href="#" class="text-danger">Terms of Service</a>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

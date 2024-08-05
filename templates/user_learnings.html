@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{%block title%}
+{{ view.kwargs.username }}'s Learnings
+{%endblock title%}
+{% block body %}
+  <div class="container mt-4">
+    <h2 class="mb-4">Learnings by {{ view.kwargs.username }}</h2>
+    <ul class="list-group">
+      {% for learning in learnings %}
+        <li class="list-group-item">
+           <a href="{% url 'learning-detail' learning.pk %}" style="text-decoration: none; color: inherit;">
+          <h5>{{ learning.subject }} - <small class="text-muted">{{ learning.date }}</small></h5>
+          <p><strong>Hours Learned:</strong> {{ learning.hours_learned }}</p>
+          <p><strong>Details:</strong> {{ learning.learning_detail }}</p>
+        </a> 
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
