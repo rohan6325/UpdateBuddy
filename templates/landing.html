@@ -1,0 +1,92 @@
+{% extends 'index.html' %}
+{% block title %}
+Home
+{% endblock title %}
+{% block body %}
+<style>
+    .hero {
+        background: url('/media/bgimg.jpeg') no-repeat center center;
+        background-size: cover;
+        color: rgb(156, 155, 154);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+    .hero h1 {
+        font-size: 4em;
+        margin-bottom: 20px;
+    }
+    .hero p {
+        font-size: 1.5em;
+        margin-bottom: 30px;
+    }
+    .hero .btn {
+        font-size: 1.2em;
+        padding: 10px 30px;
+    }
+    .features {
+        padding: 50px 0;
+    }
+    .feature {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .feature-icon {
+        font-size: 50px;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+    .feature h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .feature p {
+        font-size: 16px;
+        color: #666;
+    }
+</style>
+
+<div class="hero">
+    <h1>Welcome to Update buddy</h1>
+    <p>Your journey to learning starts here.</p>
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started</a>
+</div>
+<div class="container features">
+    <div class="row">
+        <div class="col-md-4 feature">
+            <div class="feature-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <h3>My Learnings</h3>
+            <p>Learn at your own pace and keep your buddies updated.</p>
+        </div>
+        <div class="col-md-4 feature">
+            <div class="feature-icon">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <h3>Learning List</h3>
+            <p>Get guidance from experienced buddies.</p>
+        </div>
+        <div class="col-md-4 feature">
+            <div class="feature-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Buddy help</h3>
+            <p>Watch and learn from various websites compiled by you peers.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
