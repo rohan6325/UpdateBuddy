@@ -1,19 +1,47 @@
 {% extends 'index.html' %}
-{%block title%}
+{% block title %}
 Login
-{%endblock title%}
+{% endblock title %}
 {% block body %}
-<div class="content-section border-1 " style="display: flex; justify-content: center; border: 2px; border-color: black;">
-    <form method="POST" style="border: 1px;border: double; padding: 2px; border-radius: 12px; margin-top: 2%;">
-        {%csrf_token%}
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+    }
+    .login-form {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 30px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .login-form legend {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    .login-form .btn {
+        width: 100%;
+    }
+    .login-form .border-top {
+        margin-top: 20px;
+        padding-top: 10px;
+    }
+</style>
+
+<div class="login-container">
+    <form method="POST" class="login-form">
+        {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Join today</legend>
-        {{form.as_p}}
-    </fieldset>
-        <button class="btn btn-outline-info" type="submit" style="align-self: center;">Login</button>
-   <div class="border-top pt-3">
-    <small class="text-muted">Need an account?<a href="{% url 'register' %}">Sign-up</a></small>
-   </div>
+            {{ form.as_p }}
+        </fieldset>
+        <button class="btn btn-outline-info" type="submit">Login</button>
+        <div class="border-top pt-3">
+            <small class="text-muted">Need an account? <a href="{% url 'register' %}">Sign-up</a></small>
+        </div>
     </form>
 </div>
 {% endblock body %}
