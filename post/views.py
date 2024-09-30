@@ -56,24 +56,21 @@ class LearningsListView(ListView):
         )
         
         if sort_by == 'youtube':
-            queryset = queryset.filter(links__icontains='youtube.com').order_by('-date')
-        else:
-            queryset = queryset.order_by('-date')
+            queryset = queryset.filter(links__icontains='youtube.com')
         
         if subject_filter:
             queryset = queryset.filter(subject=subject_filter)
+        
+        # Order by date and then by primary key (largest first)
+        queryset = queryset.order_by('-date', '-pk')
         
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['authors'] = User.objects.filter(learnings__in=context['learnings']).distinct()
-        return context
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         context['subjects'] = Learnings.objects.values_list('subject', flat=True).distinct()
         return context
-
 
 class LearningsCreateView(LoginRequiredMixin, CreateView):
     model = Learnings
